@@ -24,7 +24,8 @@ class Productos extends Controller
         return $nombrearchivo;
     }
     
-    public function agregarProducto(Requests $request){
+    public function agregarProducto(Request $request){
+        // dd($request);
         if($request->hasFile('file'))
             $img = $this->saveImg($request->file('file'));
         else
@@ -34,12 +35,12 @@ class Productos extends Controller
         $producto = Producto::create([
             'nombre' => $request->nombre,
             'descripcion' => $request->descripcion,
-            'imagen' => $img,
+            'imagen' => '/archivos/'.$img,
             'precio' => $request->precio,
             'id_categoria' => $request->categoria,
         ]);
         
         flash('Producto guardado.')->success();
-        return Redirect::route('agregarProducto');
+        return Redirect::route('agregarproducto');
     }
 }

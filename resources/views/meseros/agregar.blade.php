@@ -1,3 +1,25 @@
+<?php
+
+use App\Camarero;
+
+$nombre = '';
+$apellido = '';
+$direccion = '';
+$dni = '';
+
+if($id != 0){
+	$camarero = Camarero::join('usuarios', 'camareros.id_usuario', '=', 'usuarios.id')
+		->where('camareros.id_usuario', $id)
+		->get();
+		
+	$nombre = $camarero[0]->nombres;
+	$apellido = $camarero[0]->apellidos;
+	$direccion = $camarero[0]->direccion;
+	$dni = $camarero[0]->dni;
+}
+
+?>
+
 <!DOCTYPE HTML>
 <html>
 	<head>
@@ -20,7 +42,9 @@
 							<div id="menu">
 								<ul>
 									<!--<li><a href="usuario.html">Nuevo Usuario</a></li>-->
+									<li><a href="{{ route('agregarproducto') }}">Nuevo Producto</a></li>
 									<li><a href="{{ route('meseros') }}">Meseros</a></li>
+									<li><a href="{{ route('productos') }}">Productos</a></li>
 									<li><a href="{{ route('logout') }}">Cerrar Sesión</a></li>
 								</ul>
 							</div>
@@ -48,19 +72,20 @@
     								</div>
 
 									<div class="12u 12u$(xsmall)">
-										<input type="text" name="nombre" id="nombre" value="" placeholder="Nombre(s) mesero" />
+										<input type="text" name="nombre" id="nombre" value="{{ $nombre }}" placeholder="Nombre(s) mesero" />
 									</div>
 
 									<div class="12u$ 12u$(xsmall)">
-										<input type="text" name="apellido"  id="apellido" value="" placeholder="Apellido(s) mesero" />
+										<input type="text" name="apellido"  id="apellido" value="{{ $apellido }}" placeholder="Apellido(s) mesero" />
 									</div>
 
 									<div class="12u$ 12u$(xsmall)">
-										<input type="text"   name="direccion" id="direccion" value="" placeholder="Dirección" />
+										<input type="text"   name="direccion" id="direccion" value="{{ $direccion }}" placeholder="Dirección" />
 									</div>
 									
 									<div class="12u$ 12u$(xsmall)">
-										<input type="text"   name="dni" id="dni" value="" placeholder="DNI" />
+										<input type="text"   name="dni" id="dni" value="{{ $dni }}" placeholder="DNI" />
+										<input type="hidden" name="id" id="id" value="{{ $id }}" />
 									</div>
 								</div>
 								<br>
@@ -119,7 +144,6 @@
 				}
 			]);
 		</script>
-		
 		
 	</body>
 </html>

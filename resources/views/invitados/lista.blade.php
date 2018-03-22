@@ -7,7 +7,7 @@ $invitados = Invitado::join('usuarios', 'invitados.id_usuario', '=', 'usuarios.i
 	->where('invitados.id_cliente', Session::get('id'))
 	->get();
 // dd($invitados);
-
+// clasificacion en el libro
 ?>
 
 <!DOCTYPE HTML>
@@ -33,6 +33,7 @@ $invitados = Invitado::join('usuarios', 'invitados.id_usuario', '=', 'usuarios.i
 									<!--<li><a href="usuario.html">Nuevo Usuario</a></li>-->
 									<li><a href="{{ route('agregarinvitado') }}">Nuevo Invitado</a></li>
 									<li><a href="{{ route('meseros') }}">Meseros</a></li>
+									<li><a href="{{ route('productos') }}">Productos</a></li>
 									<li><a href="{{ route('logout') }}">Cerrar Sesión</a></li>
 								</ul>
 							</div>
@@ -59,7 +60,7 @@ $invitados = Invitado::join('usuarios', 'invitados.id_usuario', '=', 'usuarios.i
 										<th>Dirección</th>
 										<th>DNI</th>
 										<th>Mesa</th>
-										<th>Accion</th>
+										<!--<th>Accion</th>-->
 									</tr>
 								</thead>
 								<tbody id="content_table">
@@ -82,7 +83,7 @@ $invitados = Invitado::join('usuarios', 'invitados.id_usuario', '=', 'usuarios.i
 										
 									@endif
 									
-										<td><span class="icon fa-edit"></span><span class="icon fa-eraser"></span></td>
+										<!--<td><a class="icon fa-edit" href="{{ route('agregarinvitado').'/'.$invitado->id }}"></a><!-- <a class="icon fa-eraser"></a></td>-->
 									
 									</tr>
 								
@@ -104,7 +105,7 @@ $invitados = Invitado::join('usuarios', 'invitados.id_usuario', '=', 'usuarios.i
 		<script src="{{ asset('js/skel.min.js') }}"></script>
 		<script src="{{ asset('js/util.js') }}"></script>
 		<script src="{{ asset('js/main.js') }}"></script>
-		<script src="{{ asset('js/invoice.js') }}"></script>
+		<!--<script src="{{ asset('js/invoice.js') }}"></script>-->
 
 	</body>
 </html>

@@ -44,6 +44,10 @@ Route::group(['prefix' => 'public', 'middleware' => 'Usuario'], function(){
         return view('meseros/lista');
     }));
     
+    Route::get('/productos', array('as' => 'productos', function(){
+        return view('productos/lista');
+    }));
+    
 });    
 
 Route::group(['prefix' => 'invitados', 'middleware' => 'UsuarioCliente'], function(){
@@ -52,8 +56,8 @@ Route::group(['prefix' => 'invitados', 'middleware' => 'UsuarioCliente'], functi
         return view('invitados/lista');
     }));
     
-    Route::get('/agregar', array('as' => 'agregarinvitado', function(){
-        return view('invitados/agregar');
+    Route::get('/agregar/{id?}', array('as' => 'agregarinvitado', function($id = 0){
+        return view('invitados/agregar')->with('id', $id);
     }));
     
     Route::post('/agregar', [
@@ -61,17 +65,45 @@ Route::group(['prefix' => 'invitados', 'middleware' => 'UsuarioCliente'], functi
         'uses' => 'Gestion@agregarInvitado'
     ]);
     
+    Route::post('/borrar/{id}', [
+        'as' => 'borrarinvitado',
+        'uses' => 'Gestion@borrarInvitado'
+    ]);
+    
 });
 
 Route::group(['prefix' => 'meseros', 'middleware' => 'UsuarioAdmin'], function(){
     
-    Route::get('/agregar', array('as' => 'agregarmesero', function(){
-        return view('meseros/agregar');
+    Route::get('/agregar/{id?}', array('as' => 'agregarmesero', function($id = 0){
+        return view('meseros/agregar')->with('id', $id);
     }));
     
     Route::post('/agregar', [
         'as' => 'agregarmesero',
         'uses' => 'Gestion@agregarCamarero'
     ]);
+    
+    Route::post('/borrar/{id}', [
+        'as' => 'borrarmesero',
+        'uses' => 'Gestion@borrarMesero'
+    ]);
+    
+});
+
+Route::group(['prefix' => 'productos', 'middleware' => 'UsuarioAdmin'], function(){
+    
+    Route::get('/agregar', array('as' => 'agregarproducto', function(){
+        return view('productos/agregar');
+    }));
+    
+    Route::post('/agregar', [
+        'as' => 'agregarproducto',
+        'uses' => 'Productos@agregarProducto'
+    ]);
+    
+    // Route::post('/borrar/{id}', [
+    //     'as' => 'borrarmesero',
+    //     'uses' => 'Gestion@borrarMesero'
+    // ]);
     
 });

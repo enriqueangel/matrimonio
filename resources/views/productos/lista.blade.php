@@ -1,16 +1,18 @@
 <?php
 
-use App\Camarero;
+use App\Producto;
 
-$camareros = Camarero::join('usuarios', 'camareros.id_usuario', '=', 'usuarios.id')
+$productos = Producto::join('categorias', 'productos.id_categoria', '=', 'categorias.id')
 	->get();
+	
+// dd($productos);
 
 ?>
 
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>Meseros</title>
+		<title>Productos</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
@@ -20,14 +22,13 @@ $camareros = Camarero::join('usuarios', 'camareros.id_usuario', '=', 'usuarios.i
 		<!-- Page Wrapper -->
 		<div id="page-wrapper">
 			<header id="header">
-				<h1><a href="">Meseros</a></h1>
+				<h1><a href="index.html">Productos</a></h1>
 				<nav id="nav">
 					<ul>
 						<li class="special">
 							<a href="#menu" class="menuToggle"><span>Menu</span></a>
 							<div id="menu">
 								<ul>
-									<!--<li><a href="usuario.html">Nuevo Usuario</a></li>-->
 									
 								@if(Session::get('tipo') == 1)
 									
@@ -42,9 +43,8 @@ $camareros = Camarero::join('usuarios', 'camareros.id_usuario', '=', 'usuarios.i
 									
 								@endif
 								
-									<li><a href="{{ route('productos') }}">Productos</a></li>
+									<li><a href="{{ route('meseros') }}">Meseros</a></li>
 									<li><a href="{{ route('logout') }}">Cerrar Sesión</a></li>
-
 								</ul>
 							</div>
 						</li>
@@ -55,48 +55,60 @@ $camareros = Camarero::join('usuarios', 'camareros.id_usuario', '=', 'usuarios.i
 			<article id="main">
 				<header style="padding-top: 50px; padding-bottom: 50px;" >
 					<h2>MATRIMONIOS</h2>
-					<p>Lista de los meseros</p>
+					<p>Lista de productos</p>
 				</header>
-				<section class="wrapper style5" style="padding: 2em;">
+				<section class="wrapper style5">
 					<div class="inner">
 						<h4 style="text-align: center;">Datos Iniciales</h4>
-						<br>
-						<div class="table-wrapper">
-							<table id="tabla_factura">
-								<thead>
-									<tr>
-										<th>Nombre(s)</th>
-										<th>Apellido(s)</th>
-										<th>Dirección</th>
-										<th>DNI</th>
-										<th>Mesa(s)</th>
-										<!--<th>Accion</th>-->
-									</tr>
-								</thead>
-								<tbody id="content_table">
-									
-								@foreach($camareros as $camarero)
-									
-									<tr>
-										<td>{{ $camarero->nombres }}</td>
-										<td>{{ $camarero->apellidos }}</td>
-										<td>{{ $camarero->direccion }}</td>
-										<td>{{ $camarero->dni }}</td>
-										<td>---</td>
-										<!--<td><a class="icon fa-edit" href="{{ route('agregarmesero').'/'.$camarero->id }}"></a> <!-- <a class="icon fa-eraser"></a></td>-->
-									</tr>
-									
-								@endforeach
-									
-								</tbody>
+						
+						<div class="row">
+	
+						<!--<div class="table-wrapper">-->
+							
+							@foreach($productos as $producto)
 								
-							</table>
+							<div class="col-sm-4">
+								<div class="card" style="width: 15rem;">
+									<img class="card-img-top" src="{{ $producto->imagen }}" alt="Card image cap"
+									style="width: auto; height: 170px;">
+									<div class="card-body">
+										<h5 class="card-title">{{ $producto->nombre }}</h5>
+										<p class="card-text">{{ $producto->descripcion }}</p>
+										<span>Precio<label>{{ $producto->precio }}</label></span>
+									</div>
+								</div>
+							</div>
+								
+							@endforeach
+							
 						</div>
+							<!--<table id="tabla_factura">-->
+							<!--	<thead>-->
+							<!--		<tr>-->
+							<!--			<th>Nombre</th>-->
+							<!--			<th>Descripción</th>-->
+							<!--			<th>Precio</th>-->
+							<!--			<th>Imagen</th>-->
+										<!--<th>Accion</th>-->
+							<!--		</tr>-->
+							<!--	</thead>-->
+							<!--	<tbody id="content_table">-->
+							<!--		<tr>-->
+							<!--			<td></td>-->
+							<!--			<td></td>-->
+							<!--			<td></td>-->
+							<!--			<td></td>-->
+							<!--			<td></td>-->
+										<!--<td></td>-->
+							<!--		</tr>-->
+							<!--	</tbody>-->
+								
+							<!--</table>-->
+						<!--</div>-->
 					</div>
 				</section>
 			</article>
 		</div>
-				
 
 		<!-- Scripts -->
 		<script src="{{ asset('js/jquery.min.js') }}"></script>
@@ -105,6 +117,5 @@ $camareros = Camarero::join('usuarios', 'camareros.id_usuario', '=', 'usuarios.i
 		<script src="{{ asset('js/skel.min.js') }}"></script>
 		<script src="{{ asset('js/util.js') }}"></script>
 		<script src="{{ asset('js/main.js') }}"></script>
-		<script src="{{ asset('js/invoice2.js') }}"></script>
 	</body>
 </html>

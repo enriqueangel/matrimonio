@@ -15,10 +15,6 @@ class Producto extends Model
     
     protected $dates = ['deleted_at'];
     
-    public function pedido(){
-        return $this->hasMany('App\Pedido', 'id_producto', 'id');
-    }
-    
     public function categoria(){
         return $this->belongsTo('App\Categoria', 'id', 'id_categoria');
     }
