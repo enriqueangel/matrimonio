@@ -20,7 +20,7 @@
 <!--<script src="assets/demo/demo.js"></script>-->
 
 	<div class="signup-header">
-		<a href="" class="logo">
+		<a href="{{ route('principal') }}" class="logo">
 			<div class="demo-logo bg-primary"><img src="{{ asset('img/logo-big.png') }}" alt="" style="margin-top: -4px;"></div>&nbsp;
 			<!-- <strong>Pixel</strong>Admin -->
 		</a> 

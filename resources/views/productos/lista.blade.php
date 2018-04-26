@@ -22,7 +22,7 @@ $productos = Producto::join('categorias', 'productos.id_categoria', '=', 'catego
 		<!-- Page Wrapper -->
 		<div id="page-wrapper">
 			<header id="header">
-				<h1><a href="index.html">Productos</a></h1>
+				<h1><a href="{{ route('principal') }}">Productos</a></h1>
 				<nav id="nav">
 					<ul>
 						<li class="special">
@@ -44,6 +44,7 @@ $productos = Producto::join('categorias', 'productos.id_categoria', '=', 'catego
 								@endif
 								
 									<li><a href="{{ route('meseros') }}">Meseros</a></li>
+									<li><a href="{{ route('principal') }}">Principal</a></li>
 									<li><a href="{{ route('logout') }}">Cerrar Sesión</a></li>
 								</ul>
 							</div>
@@ -82,29 +83,6 @@ $productos = Producto::join('categorias', 'productos.id_categoria', '=', 'catego
 							@endforeach
 							
 						</div>
-							<!--<table id="tabla_factura">-->
-							<!--	<thead>-->
-							<!--		<tr>-->
-							<!--			<th>Nombre</th>-->
-							<!--			<th>Descripción</th>-->
-							<!--			<th>Precio</th>-->
-							<!--			<th>Imagen</th>-->
-										<!--<th>Accion</th>-->
-							<!--		</tr>-->
-							<!--	</thead>-->
-							<!--	<tbody id="content_table">-->
-							<!--		<tr>-->
-							<!--			<td></td>-->
-							<!--			<td></td>-->
-							<!--			<td></td>-->
-							<!--			<td></td>-->
-							<!--			<td></td>-->
-										<!--<td></td>-->
-							<!--		</tr>-->
-							<!--	</tbody>-->
-								
-							<!--</table>-->
-						<!--</div>-->
 					</div>
 				</section>
 			</article>

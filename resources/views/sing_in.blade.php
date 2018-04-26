@@ -20,11 +20,12 @@
 	<!-- <script src="assets/demo/demo.js"></script> -->
 
 	<div class="signin-header">
-		<a href="" class="logo">
+		<a href="{{ route('principal') }}" class="logo">
 			<div class="demo-logo bg-primary"><img src="{{ asset('img/logo-big.png') }}" alt="" style="margin-top: -4px;"></div>&nbsp;
 			<!-- <strong>Pixel</strong>Admin -->
 		</a> 
 		<a href="{{ route('registro') }}" class="btn btn-primary">Registrarse</a>
+		<!--<a href="{" style="align: left;" class="btn btn-primary">Principal</a>-->
 	</div> 
 
 	<h1 class="form-header">Ingresa a tu cuenta</h1>

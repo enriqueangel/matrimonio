@@ -18,7 +18,7 @@ $categorias = Categoria::All();
 	<body>
 		<div id="page-wrapper">
 			<header id="header">
-				<h1><a href="index.html">Nuevo Producto</a></h1>
+				<h1><a href="{{ route('principal') }}">Nuevo Producto</a></h1>
 				<nav id="nav">
 					<ul>
 						<li class="special">
@@ -28,6 +28,7 @@ $categorias = Categoria::All();
 									<li><a href="{{ route('agregarmesero') }}">Nuevo Mesero</a></li>
 									<li><a href="{{ route('meseros') }}">Meseros</a></li>
 									<li><a href="{{ route('productos') }}">Productos</a></li>
+									<li><a href="{{ route('principal') }}">Principal</a></li>
 									<li><a href="{{ route('logout') }}">Cerrar Sesión</a></li>
 								</ul>
 							</div>

@@ -20,7 +20,7 @@ $camareros = Camarero::join('usuarios', 'camareros.id_usuario', '=', 'usuarios.i
 		<!-- Page Wrapper -->
 		<div id="page-wrapper">
 			<header id="header">
-				<h1><a href="">Meseros</a></h1>
+				<h1><a href="{{ route('principal') }}">Meseros</a></h1>
 				<nav id="nav">
 					<ul>
 						<li class="special">
@@ -43,6 +43,7 @@ $camareros = Camarero::join('usuarios', 'camareros.id_usuario', '=', 'usuarios.i
 								@endif
 								
 									<li><a href="{{ route('productos') }}">Productos</a></li>
+									<li><a href="{{ route('principal') }}">Principal</a></li>
 									<li><a href="{{ route('logout') }}">Cerrar Sesión</a></li>
 
 								</ul>

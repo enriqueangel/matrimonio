@@ -23,7 +23,7 @@ $invitados = Invitado::join('usuarios', 'invitados.id_usuario', '=', 'usuarios.i
 		<!-- Page Wrapper -->
 		<div id="page-wrapper">
 			<header id="header">
-				<h1><a href="">Invitados</a></h1>
+				<h1><a href="{{ route('principal') }}">Invitados</a></h1>
 				<nav id="nav">
 					<ul>
 						<li class="special">
@@ -34,6 +34,7 @@ $invitados = Invitado::join('usuarios', 'invitados.id_usuario', '=', 'usuarios.i
 									<li><a href="{{ route('agregarinvitado') }}">Nuevo Invitado</a></li>
 									<li><a href="{{ route('meseros') }}">Meseros</a></li>
 									<li><a href="{{ route('productos') }}">Productos</a></li>
+									<li><a href="{{ route('principal') }}">Principal</a></li>
 									<li><a href="{{ route('logout') }}">Cerrar Sesión</a></li>
 								</ul>
 							</div>

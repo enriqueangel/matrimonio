@@ -11,12 +11,14 @@
 |
 */
 
-Route::get('/', function () {
-    return view('sing_in');
-});
+Route::get('/', 'Principal@principal')->name('principal');
 
 Route::get('/login', array('as' => 'login', function() {
     return view('sing_in');
+}));
+
+Route::get('/carrito', array('as' => 'carrito', function() {
+    return view('carrito');
 }));
 
 Route::post('/login', [

@@ -32,9 +32,9 @@ class Cuenta extends Controller
             Session::put('tipo', $user_data->id_tipo);
           
             if($user_data->id_tipo == 1){
-                return Redirect::route('meseros');
+                return Redirect::route('principal');
             } elseif($user_data->id_tipo == 2){
-                return Redirect::route('invitados');
+                return Redirect::route('principal');
             }
         } else {
             flash('Correo o contraseña erronea.')->error();
@@ -76,6 +76,6 @@ class Cuenta extends Controller
     public function logout(){
         Session::flush();
         Auth::logout();
-        return Redirect::route('login');
+        return Redirect::route('principal');
     }
 }
