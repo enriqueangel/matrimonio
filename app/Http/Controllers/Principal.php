@@ -10,6 +10,7 @@ use Redirect;
 
 use App\Categoria;
 use App\Producto;
+use App\Carrito;
 
 use Laracasts\Flash\Flash;
 
@@ -21,6 +22,7 @@ class Principal extends Controller
     public function principal(){
         $categorias = Categoria::All();
         $productos = Producto::All();
+        
         return view('principal')->with('categorias', $categorias)
                 ->with('productos', $productos);
     }

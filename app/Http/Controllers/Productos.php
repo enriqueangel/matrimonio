@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Redirect;
 
 use App\Producto;
+use App\Categoria;
 
 use Laracasts\Flash\Flash;
 
@@ -26,6 +27,7 @@ class Productos extends Controller
     
     public function agregarProducto(Request $request){
         // dd($request);
+    
         if($request->hasFile('file'))
             $img = $this->saveImg($request->file('file'));
         else
@@ -42,5 +44,48 @@ class Productos extends Controller
         
         flash('Producto guardado.')->success();
         return Redirect::route('agregarproducto');
+    }
+    
+    public function productos(){
+        $categorias = Categoria::All();
+        $productos = Producto::All();
+        return view('catalogo')->with('categorias', $categorias)
+                ->with('productos', $productos);
+    }
+
+    public function catalogo(){
+        $categorias = Categoria::All();
+        $productos = Producto::All();
+        return view('productos/lista')->with('categorias', $categorias)
+                ->with('productos', $productos);
+    }
+    
+    public function editarProducto(Request $request){
+        // dd($request);   
+        if($request->hasFile('file'))
+            $img = $this->saveImg($request->file('file'));
+        else
+            $img = '';
+            
+        if($request->hasFile('file'))
+            $producto = Producto::where('id', $request->id)
+                ->update([
+                    'nombre' => $request->nombre,
+                    'descripcion' => $request->descripcion,
+                    'imagen' => '/archivos/'.$img,
+                    'precio' => $request->precio,
+                    'id_categoria' => $request->categoria,
+                ]);
+        else
+            $producto = Producto::where('id', $request->id)
+                ->update([
+                    'nombre' => $request->nombre,
+                    'descripcion' => $request->descripcion,
+                    'precio' => $request->precio,
+                    'id_categoria' => $request->categoria,
+                ]);
+        
+        flash('Producto modificado.')->success();
+        return Redirect::route('productos');
     }
 }

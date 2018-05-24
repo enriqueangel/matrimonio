@@ -1,109 +1,260 @@
-{{ setlocale(LC_MONETARY, 'en_US') }}
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title>Productos</title>
-	
-		<link href="{{ asset('styles/ventas.css') }}" rel="stylesheet" type="text/css">
-		<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet">
-		<link rel="stylesheet" href="{{ asset('styles/main.css') }}" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<title>Matrimonio</title>
+		<!-- CSS  -->
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<link href="{{ asset('/styles/materialize.css') }}" type="text/css" rel="stylesheet" media="screen,projection"/>
+		<link href="{{ asset('/styles/style.css') }}" type="text/css" rel="stylesheet" media="screen,projection"/>
 	</head>
+	
 	<body>
-		<div id="page-wrapped">
-			<header id="header">
-				<h1><a href="{{ route('principal') }}">Nuestros Productos</a></h1>
-					<nav id="nav">
+		<nav class="white" role="navigation">
+			<div class="nav-wrapper container">
+				<a id="logo-container" href="{{ route('principal') }}" class="brand-logo ">Matrimonios</a>
+				<ul class="right hide-on-med-and-down">
+					<div id="menu">
 						<ul>
-							<li class="special">
-								<a href="#menu" class="menuToggle"><span>Menu</span></a>
-								<div id="menu">
-									<ul>
-										
-									@if(!(Session::get('tipo') == 1 || Session::get('tipo') == 2))
-									
-										<li><a href="{{ route('login') }}">Iniciar sesión</a></li>
-										<li><a href="{{ route('registro') }}">Registrarse</a></li>
-										<li><a href="{{ route('carrito') }}">Carrito</a></li>
-										
-									@else
-									
-										@if(Session::get('tipo') == 1)
-									
-											<li><a href="{{ route('agregarmesero') }}">Nuevo Mesero</a></li>
-											<li><a href="{{ route('agregarproducto') }}">Nuevo Producto</a></li>
-											
-										@endif
-										@if(Session::get('tipo') == 2)
-											
-											<li><a href="{{ route('agregarinvitado') }}">Nuevo Invitado</a></li>
-											<li><a href="{{ route('invitados') }}">Invitados</a></li>
-											
-										@endif
-										
-											<li><a href="{{ route('meseros') }}">Meseros</a></li>
-											<li><a href="{{ route('carrito') }}">Carrito</a></li>
-											<li><a href="{{ route('logout') }}">Cerrar Sesión</a></li>
-										
-									@endif
-
-									</ul>
-								</div>
-							</li>
+							
+							@if(Auth::guest())
+							
+							<li><a href="{{ route('registro') }}">Nuevo Usuario</a></li>
+							
+							@else
+							
+							<li><a class="dropdown-trigger" href="#!"  data-target="dropdown1">Organización<i class="material-icons right">arrow_drop_down</i></a></li>
+								
+							@endif
+							
+							<li><a href="{{ route('catalogo') }}">Nuestros productos</a></li>
+							
+							@if(!Auth::guest())
+					
+							<li><a href="{{ route('logout') }}">Cerrar Sesión</a></li>
+							
+							@endif
+							
+							<li><a href="{{ route('carrito') }}"><i class="material-icons" size="small">shopping_cart</i></a></li>
 						</ul>
-					</nav>
-			</header>
+					</div>
+				</ul>
+				
+				<ul id="nav-mobile" class="sidenav">
+					
+					@if(Auth::guest())
+							
+					<li><a href="{{ route('registro') }}">Nuevo Usuario</a></li>
+					
+					@else
+					
+					<li><a class="dropdown-trigger" href="#!"  data-target="dropdown2">Organización<i class="material-icons right">arrow_drop_down</i></a></li>
+						
+					@endif
+					
+					<li><a href="{{ route('catalogo') }}">Nuestros productos</a></li>
+					
+					@if(!Auth::guest())
+					
+					<li><a href="{{ route('logout') }}">Cerrar Sesión</a></li>
+					
+					@endif
+					
+					<li><a href="{{ route('carrito') }}"><i class="material-icons" size="small">shopping_cart</i></a></li>
+					
+				</ul>
+				
+				<a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+				
+				<ul id="dropdown1" class="dropdown-content">
+					
+					@if(Session::get('estado') == 'mesas')
+					
+					<li><a href="{{ route('listamesas') }}">Administrar Mesas</a></li>
+					<li class="divider"></li>
+					
+					@endif
+					@if(Session::get('tipo') == 1)
+					
+					<li><a href="{{ route('agregarmesero') }}">Nuevo Mesero</a></li>
+					<li class="divider"></li>
+					<li><a href="{{ route('agregarproducto') }}">Nuevo Producto</a></li>
+					<li class="divider"></li>
+					<li><a href="{{ route('productos') }}">Productos</a></li>
+					<li class="divider"></li>
+					
+					@endif
+					@if(Session::get('tipo') == 2)
+					
+					<li><a href="{{ route('agregarinvitado') }}">Nuevo Invitado</a></li>
+					<li class="divider"></li>
+					<li><a href="{{ route('invitados') }}">Invitados</a></li>
+					<li class="divider"></li>
+					
+					@endif
+					
+					<li><a href="{{ route('meseros') }}">Meseros</a></li>
+					
+				</ul>
+				
+				<ul id="dropdown2" class="dropdown-content">
+					
+					@if(Session::get('estado') == 'mesas')
+					
+					<li><a href="{{ route('listamesas') }}">Administrar Mesas</a></li>
+					<li class="divider"></li>
+					
+					@endif
+					@if(Session::get('tipo') == 1)
+					
+					<li><a href="{{ route('agregarmesero') }}">Nuevo Mesero</a></li>
+					<li class="divider"></li>
+					<li><a href="{{ route('agregarproducto') }}">Nuevo Producto</a></li>
+					<li class="divider"></li>
+					<li><a href="{{ route('productos') }}">Productos</a></li>
+					<li class="divider"></li>
+					
+					@endif
+					@if(Session::get('tipo') == 2)
+					
+					<li><a href="{{ route('agregarinvitado') }}">Nuevo Invitado</a></li>
+					<li class="divider"></li>
+					<li><a href="{{ route('invitados') }}">Invitados</a></li>
+					<li class="divider"></li>
+					
+					@endif
+					
+					<li><a href="{{ route('meseros') }}">Meseros</a></li>
+					
+				</ul>
+			</div>
+		</nav>
+
+		<div id="index-banner" class="parallax-container">
+			<div class="section no-pad-bot">
+				<div class="container">
+					<br><br>
+					<h1 class="header center white-text lighten-5">MATRIMONIO</h1>
+					<div class="row center">
+						<h5 class="header center white-text col s12 lighten-5">Una forma facil y rapida de organizar tu evento mas importante.</h5>
+					</div>
+					
+					@if(Auth::guest())
+					
+					<div class="row center">
+						<a href="{{ route('login') }}" id="download-button" class="btn-large waves-effect waves-light teal lighten-1">Inicia YA</a>
+					</div>
+					
+					@endif
+					
+				</div>
+			</div>
+			<div class="parallax"><img src="{{ asset('/img/nuevas/background1.jpg') }}" alt="Unsplashed background img 1"></div>
+		</div>
+
+		<div class="container">
+			<div class="section">
+	
+		      <!--   Icon Section   -->
+			<div class="row">
+				
+				@for($i =0; $i < 6; $i++)
+					@if($productos[$i]->id_categoria != 7)
+					
+				<div class="col s12 m4">
+					<div class="icon-block">
+					<h2 class="center brown-text"><i class="material-icons">loyalty</i></h2>
+						<div class="row">
+							    
+							<div class="card">
+								<div class="card">
+									<div class="card-image waves-effect waves-block waves-light">
+										<img class="activator" src="{{ $productos[$i]->imagen }}" height= "300px"  >
+									</div>
+									<div class="card-content">
+										<p>{{ ucwords($productos[$i]->nombre) }}</p>
+										<p>{{ $productos[$i]->precio }} c/u</p>
+										<!--<a class="btn-floating halfway-fab waves-effect waves-light red pulse"><i class="material-icons">shopping_cart</i></a>-->
+									</div>
+									<div class="card-reveal">
+										<span class="card-title grey-text text-darken-4">{{ ucwords($productos[$i]->nombre) }}<i class="material-icons right">close</i></span>
+										<p>{{ $productos[$i]->descripcion }}</p>
+									</div>
+								</div>
+							</div>
+			          </div>
+							  
+					</div>
+		        </div>
+		        
+		        	@endif
+		        @endfor
+				
+		      </div>
+			</div>
 		</div>
 	
-		<section class="wrapper style5" style="margin-top: 50px">	
-			<article id="main">
-				<div class="wrap">
-					<h1>Nuestros Productos</h1>
-					<div style="text-align:center" id='mensaje'></div><br>
-					<div class="store-wrapper">
-						<div class="category_list">
-							<a class="category_item" category="all">Todo</a>
-							
-						@foreach($categorias as $categoria)
-							
-							<a class="category_item" category="{{ $categoria->id }}">{{ ucwords($categoria->categoria) }}</a>
-							
-						@endforeach
-							
-						</div>
-						<section class="products-list">
-							
-						@foreach($productos as $producto)
-							
-							<div class="product-item" category="{{ $producto->id_categoria }}">
-								<img src="{{ $producto->imagen }}" alt="" >
-								<a class="add-to-cart" href="#" data-name="{{ ucwords($producto->nombre) }}" data-price="{{ $producto->precio }}">{{ ucwords($producto->nombre) }}
-								<br><span style="text-align: right;">{{	 money_format('%.2n', $producto->precio) }}</span>
-								</a>
-							</div>
-							
-						@endforeach
-							
-						</section>
+		<div class="parallax-container valign-wrapper">
+			<div class="parallax"><img src="{{ asset('img/matrimonio.jpg') }}" alt="Unsplashed background img 2"></div>
+		</div>
+	
+		<!--<div class="container">-->
+		<!--	<div class="section">-->
+		<!--		<div class="row">-->
+		<!--			<div class="col s12 center">-->
+		<!--				<h3><i class="mdi-content-send brown-text"></i></h3>-->
+		<!--				<h4>CONTACTANOS</h4>-->
+		<!--				<p class="left-align light">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam scelerisque id nunc nec volutpat. Etiam pellentesque tristique arcu, non consequat magna fermentum ac. Cras ut ultricies eros. Maecenas eros justo, ullamcorper a sapien id, viverra ultrices eros. Morbi sem neque, posuere et pretium eget, bibendum sollicitudin lacus. Aliquam eleifend sollicitudin diam, eu mattis nisl maximus sed. Nulla imperdiet semper molestie. Morbi massa odio, condimentum sed ipsum ac, gravida ultrices erat. Nullam eget dignissim mauris, non tristique erat. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;</p>-->
+		<!--			</div>-->
+		<!--		</div>-->
+		<!--	</div>-->
+		<!--</div>-->
+	
+	
+		<footer class="page-footer teal">
+			<div class="container">
+				<div class="row">
+					<div class="col l6 s12">
+						<h5 class="white-text">Nuesta compañia</h5>
+						<p class="grey-text text-lighten-4">Somos un equipo de estudiantes universitarios que trabajan en este proyecto como si fuera nuestro trabajo a tiempo completo. Cualquier notica ayudaría a apoyar y continuar el desarrollo de este proyecto y es muy apreciado.</p>
+					</div>
+					<div class="col l3 s12">
+						<h5 class="white-text" >Equipo de trabajo</h5>
+						<ul>
+							<li><img class="responsive-img" src="{{ asset('/img/nuevas/developer1.png') }}" height="50" width="50"></li>
+							<li><img class="responsive-img" src="{{ asset('/img/nuevas/developer2.png') }}" height="50" width="50"></li>
+							<li><img class="responsive-img" src="{{ asset('/img/nuevas/developer3.png') }}" height="50" width="50"></li>
+							<li><img class="responsive-img" src="{{ asset('/img/nuevas/developer4.png') }}" height="50" width="50"></li>
+							<li><img class="responsive-img" src="{{ asset('/img/nuevas/developer5.png') }}" height="50" width="50"></li>
+						</ul>
+					</div>
+					<div class="col l3 s12">
+						<h5 class="white-text" align="center">Contacto</h5>
+						<ul>
+							<li><a class="white-text" href="#!">Carlos Enrique Angel</a></li>
+							<br>
+							<li><a class="white-text" href="#!">Ronald Felipe Gonzalez</a></li>
+							<br>
+							<li><a class="white-text" href="#!">Lina Johana Taborda</a></li>
+							<br>
+							<li><a class="white-text" href="#!">Yesica Cifuentes</a></li>
+							<br>
+							<li><a class="white-text" href="#!">Sebastian Hoyos</a></li>
+						</ul>
 					</div>
 				</div>
-			</article>
-		</section>
-		
-		<!--<script src="assets/js/jquery-3.2.1.js"></script>-->
-		<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-		<script src="{{ asset('/js/ventas.js') }}"></script>
-		<script src="{{ asset('/js/jquery.min.js') }}"></script>
-		<script src="{{ asset('/js/jquery.scrollex.min.js') }}"></script>
-		<script src="{{ asset('/js/jquery.scrolly.min.js') }}"></script>
-		<script src="{{ asset('/js/skel.min.js') }}"></script>
-		<script src="{{ asset('/js/util.js') }}"></script>
-		<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-		<script src="{{ asset('/js/main.js') }}"></script>
-		<script src="{{ asset('/js/invoice.js') }}"></script>
-		<script src="{{ asset('/js/cart.js') }}"></script>
-		<script src="{{ asset('/js/shoppingCart.js') }}"></script>
-    	<script src="{{ asset('/js/editCart.js') }}"></script>
+			</div>
+			<div class="footer-copyright">
+			
+			</div>
+		</footer>
+	
+		<!--  Scripts-->
+		<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+		<script src="{{ asset('/js/nuevas/materialize.js') }}"></script>
+		<script src="{{ asset('/js/nuevas/init.js') }}"></script>
+		<script src="{{ asset('/js/nuevas/dropdown.js') }}"></script>
+	  
 	</body>
 </html>

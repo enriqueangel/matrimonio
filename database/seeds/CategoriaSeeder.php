@@ -36,5 +36,9 @@ class CategoriaSeeder extends Seeder
         Categoria::create([
             'categoria' => 'Zapatos',
         ]);
+        
+        Categoria::create([
+            'categoria' => 'Mesas',
+        ]);
     }
 }

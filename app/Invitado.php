@@ -11,7 +11,7 @@ class Invitado extends Model
     
     protected $table = 'invitados';
 
-    protected $fillable = ['id', 'id_mesa', 'id_usuario', 'id_invitado', 'id_cliente'];
+    protected $fillable = ['id', 'id_mesa', 'id_usuario', 'id_invitado', 'id_cliente', 'correo'];
     
     protected $dates = ['deleted_at'];
     

@@ -11,10 +11,12 @@ use App\Usuario;
 use App\Invitado;
 use App\Camarero;
 
+use Mail;
 use Laracasts\Flash\Flash;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Sns;
 
 class Gestion extends Controller
 {
@@ -32,9 +34,12 @@ class Gestion extends Controller
                 ]);
                 
                 $invitado = Invitado::create([
+                    'correo' => $request->correo,
                     'id_usuario' => $usuario->id,
                     'id_cliente' => Session::get('id'),
                 ]);
+                
+                Mail::to($request->correo)->send(new \App\Mail\Invitacion());
                 
                 flash('Invitado agregado')->success();
                 return Redirect::route('agregarinvitado');
@@ -52,7 +57,7 @@ class Gestion extends Controller
                 ]);
                 
             flash('Invitado modificado')->success();
-            return Redirect::route('agregarinvitado');
+            return Redirect::route('invitados');
         }
     }
     

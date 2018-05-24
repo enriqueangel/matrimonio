@@ -3,149 +3,277 @@
 use App\Categoria;
 
 $categorias = Categoria::All();
-// dd($categorias);
 
 ?>
 
-<!DOCTYPE HTML>
-<html>
-	<head>Nuevo Producto</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
-		<link rel="stylesheet" href="{{ asset('styles/main.css') }}" />
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<title>Matrimonio</title>
+		
+		<!-- CSS  -->
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<link href="{{ asset('/styles/materialize.css') }}" type="text/css" rel="stylesheet" media="screen,projection"/>
+		<link href="{{ asset('/styles/style.css') }}" type="text/css" rel="stylesheet" media="screen,projection"/>
 	</head>
+	
 	<body>
-		<div id="page-wrapper">
-			<header id="header">
-				<h1><a href="{{ route('principal') }}">Nuevo Producto</a></h1>
-				<nav id="nav">
-					<ul>
-						<li class="special">
-							<a href="#menu" class="menuToggle"><span>Menu</span></a>
-							<div id="menu">
-								<ul>
-									<li><a href="{{ route('agregarmesero') }}">Nuevo Mesero</a></li>
-									<li><a href="{{ route('meseros') }}">Meseros</a></li>
-									<li><a href="{{ route('productos') }}">Productos</a></li>
-									<li><a href="{{ route('principal') }}">Principal</a></li>
-									<li><a href="{{ route('logout') }}">Cerrar Sesión</a></li>
-								</ul>
-							</div>
-						</li>
-					</ul>
-				</nav>
-			</header>
-		<!-- Main -->
-			<article id="main">
-				<header style="padding-top: 50px; padding-bottom: 50px;" >
-					<h2>MATRIMONIOS</h2>
-					<p>Creacion de un nuevo producto</p>
-				</header>
-				<section class="wrapper style5">
-					<div class="inner">
-						<section>
-							<h4 style="text-align: center;">Datos Iniciales</h4>
-
-							{!! Form::open(['route' => 'agregarproducto', 'method' => 'POST', 'id' => 'agregar-form_id', 'class' => 'panel', 'files'=>true,]) !!}
+		<nav class="white" role="navigation">
+			<div class="nav-wrapper container">
+				<a id="logo-container" href="{{ route('principal') }}" class="brand-logo ">Matrimonios</a>
+				<ul class="right hide-on-med-and-down">
+					<div id="menu">
+						<ul>
 							
-								<div class="row uniform" style="text-align: center"> 
-								    
-								    <div class="12u 12u$(xsmall)">
-										@include('flash::message')
-									</div>
-
-									<div class="12u 12u$(xsmall)">
-										<input type="text" name="nombre" id="nombre" value="" placeholder="Nombre producto" />
-									</div>
-
-									<div class="12u$ 12u$(large)">
-										<input type="text" name="descripcion"  id="descripcion" value="" placeholder="Descripción" />
-									</div>
-
-									<div class="12u$ 12u$(xsmall)">
-										<input type="number" name="precio"  id="precio" value="" placeholder="Precio" />
-									</div>
-									
-									<div class="12u$ 12u$(xsmall)">
-										<h5 style="text-align: left">Categoria</h5>
-										
-									@foreach($categorias as $categoria)
-										
-										<div class="3u$">
-										    <div class="radio" id="categoria">
-										        <label><input type="radio" name="categoria" value="{{ $categoria->id }}" id="categoria"> {{ $categoria->categoria }}</label>
-										    </div>
-										</div>
-										
-									@endforeach
-										
-									</div>
-
-									<div class="12u$ file_input" style="text-align: center">
-								        <!--<label for="examine_file" id='label_examine' required><span class="glyphicon glyphicon-picture"></span><span style="color: #FFF">Buscar Imagen</span></label>-->
-									    <input type="file" name="file" id="examine_file" accept="image/*" required/>
-									    <img id="prevew_file" src="#" style="margin-top: 10px" hidden>
-									</div>
-								</div>
-								<br>
-								<div class="12u$">
-									<ul class="actions" style="text-align: center">
-										<li><input type="submit" value="Agregar" class="principal btn-block btn-lg" id="add_row"/></li>
-									</ul>
-								</div>
+							@if(Auth::guest())
+							
+							<li><a href="{{ route('registro') }}">Nuevo Usuario</a></li>
+							
+							@else
+							
+							<li><a class="dropdown-trigger" href="#!"  data-target="dropdown1">Organización<i class="material-icons right">arrow_drop_down</i></a></li>
 								
-							{!! Form::close() !!}
+							@endif
 							
-						</section>
+							<li><a href="{{ route('catalogo') }}">Nuestros productos</a></li>
+							
+							@if(!Auth::guest())
+					
+							<li><a href="{{ route('logout') }}">Cerrar Sesión</a></li>
+							
+							@endif
+							
+							<li><a href="{{ route('carrito') }}"><i class="material-icons" size="small">shopping_cart</i></a></li>
+						</ul>
 					</div>
-				</section>
-			</article>
+				</ul>
+				
+				<ul id="nav-mobile" class="sidenav">
+					
+					@if(Auth::guest())
+							
+					<li><a href="{{ route('registro') }}">Nuevo Usuario</a></li>
+					
+					@else
+					
+					<li><a class="dropdown-trigger" href="#!"  data-target="dropdown2">Organización<i class="material-icons right">arrow_drop_down</i></a></li>
+						
+					@endif
+					
+					<li><a href="{{ route('catalogo') }}">Nuestros productos</a></li>
+					
+					@if(!Auth::guest())
+					
+					<li><a href="{{ route('logout') }}">Cerrar Sesión</a></li>
+					
+					@endif
+					
+					<li><a href="{{ route('carrito') }}"><i class="material-icons" size="small">shopping_cart</i></a></li>
+					
+				</ul>
+				
+				<a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+				
+				<ul id="dropdown1" class="dropdown-content">
+					
+					@if(Session::get('estado') == 'mesas')
+					
+					<li><a href="{{ route('listamesas') }}">Administrar Mesas</a></li>
+					<li class="divider"></li>
+					
+					@endif
+					@if(Session::get('tipo') == 1)
+					
+					<li><a href="{{ route('agregarmesero') }}">Nuevo Mesero</a></li>
+					<li class="divider"></li>
+					<li><a href="{{ route('agregarproducto') }}">Nuevo Producto</a></li>
+					<li class="divider"></li>
+					<li><a href="{{ route('productos') }}">Productos</a></li>
+					<li class="divider"></li>
+					
+					@endif
+					@if(Session::get('tipo') == 2)
+					
+					<li><a href="{{ route('agregarinvitado') }}">Nuevo Invitado</a></li>
+					<li class="divider"></li>
+					<li><a href="{{ route('invitados') }}">Invitados</a></li>
+					<li class="divider"></li>
+					<li><a href="{{ route('productos') }}">Productos</a></li>
+					<li class="divider"></li>
+					
+					@endif
+					
+					<li><a href="{{ route('meseros') }}">Meseros</a></li>
+					
+				</ul>
+				
+				<ul id="dropdown2" class="dropdown-content">
+					
+					@if(Session::get('estado') == 'mesas')
+					
+					<li><a href="{{ route('listamesas') }}">Administrar Mesas</a></li>
+					<li class="divider"></li>
+					
+					@endif
+					@if(Session::get('tipo') == 1)
+					
+					<li><a href="{{ route('agregarmesero') }}">Nuevo Mesero</a></li>
+					<li class="divider"></li>
+					<li><a href="{{ route('agregarproducto') }}">Nuevo Producto</a></li>
+					<li class="divider"></li>
+					<li><a href="{{ route('productos') }}">Productos</a></li>
+					<li class="divider"></li>
+					
+					@endif
+					@if(Session::get('tipo') == 2)
+					
+					<li><a href="{{ route('agregarinvitado') }}">Nuevo Invitado</a></li>
+					<li class="divider"></li>
+					<li><a href="{{ route('invitados') }}">Invitados</a></li>
+					<li class="divider"></li>
+					
+					@endif
+					
+					<li><a href="{{ route('meseros') }}">Meseros</a></li>
+					
+				</ul>
+			</div>
+		</nav>
+
+		<div id="index-banner" class="parallax-container">
+			<div class="section no-pad-bot">
+				<div class="container">
+					<br><br>
+					<h1 class="header center white-text lighten-5">CREADOR DE PRODUCTOS</h1>
+					<div class="row center">
+						<h5 class="header center white-text col s12 lighten-5">Agrega productos con sus imagenes.</h5>
+					</div>
+					<br><br>
+				</div>
+			</div>
+			<div class="parallax"><img src="{{ asset('/img/nuevas/background1.jpg') }}" alt="Unsplashed background img 1"></div>
 		</div>
 
-		<!-- Scripts -->
-		<script src="{{ asset('js/jquery.min.js') }}"></script>
-		<script src="{{ asset('js/jquery.scrollex.min.js') }}"></script>
-		<script src="{{ asset('js/jquery.scrolly.min.js') }}"></script>
-		<script src="{{ asset('js/skel.min.js') }}"></script>
-		<script src="{{ asset('js/util.js') }}"></script>
-		<script src="{{ asset('js/main.js') }}"></script>
-		<script src="{{ asset('js/file.js') }}"></script>
-		
-		<script src="{{ asset('js/bootstrap.min.js') }}"></script>
-		<script src="{{ asset('js/pixel-admin.min.js') }}"></script>
+		<div class="container">
+			<section>
+				<h4 style="text-align: center;">Datos Iniciales</h4>
+				
+				{!! Form::open(['route' => 'agregarproducto', 'method' => 'POST', 'id' => 'crearForm', 'files'=>true,]) !!}
+				
+					<div class="row uniform">
+						
+						@include('flash::message')
+						
+						<div class="input-field"> 
+							<input type="text" name="nombre" id="nombre" class="validate"/>
+							<label class="active" for="nombre">Nombre Producto</label>
+							<span class="helper-text" style="display: none; color: #f00" data-error="wrong" id="errorNombre">El nombre es obligatorio.</span>
+						</div>
+						
+						<div class="input-field"> 
+							<input type="text" name="descripcion" id="descripcion" class="validate"  />
+							<label class="active" for="descripcion">Descripción Producto</label>
+							<span class="helper-text" style="display: none; color: #f00" data-error="wrong" id="errorDescripcion">La descripción es obligatoria.</span>
+						</div>
+						
+						<div class="input-field"> 
+							<input type="number" min="1" step="any" name="precio" id="precio" class="validate"/>
+							<label class="active" for="precio">Precio Producto</label>
+							<span class="helper-text" style="display: none; color: #f00" data-error="wrong" id="errorPrecio">El precio es obligatorio.</span>
+						</div>
+						
+						<div class="input-field">
+							<span>Categoria:</span>
+							<br><br>
+							<div class="row uniform">
+								
+								@foreach($categorias as $categoria)
+									
+								<div class="col s3">
+									<label>
+										<input class="with-gap" name="categoria" type="radio" value="{{ $categoria->id }}" id="categoria"/>
+										<span>{{ $categoria->categoria }}</span>
+									</label>
+								</div>
+									
+								@endforeach
+								
+							</div>
+							<span class="helper-text" style="display: none; color: #f00" data-error="wrong" id="errorCategoria">La categoria es obligatoria.</span>
+						</div>
+						
+						<div class="file-field input-field">
+							<div class="btn">
+								<span>File</span>
+								<input type="file" accept="image/*"  name="file" id="examine_file">
+							</div>
+							<div class="file-path-wrapper">
+								<input class="file-path validate" type="text">
+							</div>
+							<span class="helper-text" style="display: none; color: #f00" data-error="wrong" id="errorImagen">La imagen es obligatoria.</span>
+						</div>
+						
+					</div>
+					<div class="12u$">
+						<ul class="actions" style="text-align: center">
+							<li><input type="button" value="crear" class="waves-effect waves-light btn" id="crear"/></li>
+						</ul>
+					</div>
+					
+				{!! Form::close() !!}
+				
+			</section>
+		</div>
+
+	  <!--  Scripts-->
+		<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+		<script src="{{ asset('/js/nuevas/materialize.js') }}"></script>
+		<script src="{{ asset('/js/nuevas/init.js') }}"></script>
+		<script src="{{ asset('/js/nuevas/dropdown.js') }}"></script>
+		<script src="{{ asset('/js/nuevas/producto.js') }}"></script>
 		
 		<script type="text/javascript">
-			$('div.alert').not('.alert-important').delay(3000).fadeOut(350);
 		
-			window.PixelAdmin.start([
-				function () {
-					$("#agregar-form_id").validate({ focusInvalid: true, errorPlacement: function () {} });
+			$(document).ready(() => {
+			    M.updateTextFields()
+			})
+			
+			$('#crear').click(() => {
+				if($('#examine_file').val() == ''){
+					$('#errorImagen').css('display', 'block')
+					$('#examine_file').focus()
+				} else 
+					$('#errorImagen').css('display', 'none')
+			
+				if($('input[name="categoria"]:radio').is(':checked'))
+					$('#errorCategoria').css('display', 'none')
+				else 
+					$('#errorCategoria').css('display', 'block')
 					
-					$("#nombre").rules("add", {
-						required: true,
-						minlength: 1
-					});
+				if($('#precio').val() == ''){
+					$('#errorPrecio').css('display', 'block')
+					$('#precio').focus()
+				} else 
+					$('#errorPrecio').css('display', 'none')
 					
-					$("#descripcion").rules("add", {
-						required: true,
-						minlength: 1
-					});
+				if($('#descripcion').val() == ''){
+					$('#errorDescripcion').css('display', 'block')
+					$('#descripcion').focus()
+				} else 
+					$('#errorDescripcion').css('display', 'none')
+				
+				if($('#nombre').val() == ''){
+					$('#errorNombre').css('display', 'block')
+					$('#nombre').focus()
+				} else 
+					$('#errorNombre').css('display', 'none')
 					
-					$("#precio").rules("add", {
-						required: true,
-						minlength: 1
-					});
-					
-					$("#examine_file").rules("add", {
-						required: true,
-					});
-					
-					$("[name='categoria']").rules("add", {
-						required: true,
-					});
-				}
-			]);
+				if($('#nombre').val() != '' && $('#descripcion').val() != '' && $('#precio').val() != '' && $('input[name="categoria"]:radio').is(':checked') && $('#examine_file').val() != '')
+					$('#crearForm').submit()
+			})
+			
 		</script>
 		
 	</body>

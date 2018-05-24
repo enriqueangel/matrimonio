@@ -21,6 +21,8 @@ Route::get('/carrito', array('as' => 'carrito', function() {
     return view('carrito');
 }));
 
+Route::get('/catalogo', 'Productos@productos')->name('catalogo');
+
 Route::post('/login', [
     'as' => 'login',
     'uses' => 'Cuenta@login'
@@ -46,9 +48,7 @@ Route::group(['prefix' => 'public', 'middleware' => 'Usuario'], function(){
         return view('meseros/lista');
     }));
     
-    Route::get('/productos', array('as' => 'productos', function(){
-        return view('productos/lista');
-    }));
+    Route::get('/productos', 'Productos@catalogo')->name('productos');
     
 });    
 
@@ -94,8 +94,12 @@ Route::group(['prefix' => 'meseros', 'middleware' => 'UsuarioAdmin'], function()
 
 Route::group(['prefix' => 'productos', 'middleware' => 'UsuarioAdmin'], function(){
     
-    Route::get('/agregar', array('as' => 'agregarproducto', function(){
+    Route::get('/agregar/', array('as' => 'agregarproducto', function(){
         return view('productos/agregar');
+    }));
+    
+    Route::get('/editar/{id?}', array('as' => 'editarproducto', function($id = 0){
+        return view('productos/editar')->with('id', $id);
     }));
     
     Route::post('/agregar', [
@@ -103,9 +107,37 @@ Route::group(['prefix' => 'productos', 'middleware' => 'UsuarioAdmin'], function
         'uses' => 'Productos@agregarProducto'
     ]);
     
+    Route::post('/editar', [
+        'as' => 'editarproducto',
+        'uses' => 'Productos@editarProducto'
+    ]);
+    
     // Route::post('/borrar/{id}', [
     //     'as' => 'borrarmesero',
     //     'uses' => 'Gestion@borrarMesero'
     // ]);
+    
+});
+
+Route::group(['prefix' => 'pagos'], function(){
+    
+    Route::get('/obtenerinformacionpago/{monto}', [
+        'as' => 'obtenerinformacionpago',
+        'uses' => 'Pagos@getObtenerinformacionpago'
+    ]);
+    
+    Route::post('/compra/', 'Pagos@compra')->name('compra');
+    
+});
+
+Route::group(['prefix' => 'mesas'], function(){
+   
+   Route::get('/lista', 'Mesas@lista')->name('listamesas');
+   Route::get('/informacion/{id}', 'Mesas@informacion')->name('informacionmesa');
+   Route::get('/meseros/{id}', 'Mesas@meseros')->name('meserosdisponibles');
+   Route::get('/invitados/{id}', 'Mesas@invitados')->name('invitadosdisponibles');
+   
+   Route::post('/acomodar/', 'Mesas@acomodarInvitado')->name('acomodarinvitado');
+   Route::post('/asignar/', 'Mesas@asignarMeseros')->name('asignarmeseros');
     
 });

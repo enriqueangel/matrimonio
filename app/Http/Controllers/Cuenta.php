@@ -11,6 +11,7 @@ use Redirect;
 
 use App\Usuario;
 use App\Cliente;
+use App\Carrito;
 
 use Laracasts\Flash\Flash;
 
@@ -30,6 +31,16 @@ class Cuenta extends Controller
             Session::put('id', $user_data->id);
             Session::put('correo', $user_data->correo);
             Session::put('tipo', $user_data->id_tipo);
+            
+            
+            $carrito = Carrito::where('estado', 'mesas')
+                ->where('id_cliente', $user_data->id)
+                ->first();
+            
+            if(count($carrito) > 0)
+                Session::put('estado', 'mesas');
+            else
+                Session::put('estado', 'ninguno');
           
             if($user_data->id_tipo == 1){
                 return Redirect::route('principal');
@@ -69,7 +80,7 @@ class Cuenta extends Controller
             
         } else {
             flash('El correo o DNI ya existe.')->error();
-            return Redirect::route('registro');
+            return Redirect::route('registro')->with('error', 'hola');
         }
     }
     

@@ -15,6 +15,7 @@ class CreateInvitadosTable extends Migration
     {
         Schema::create('invitados', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('correo');
             
             $table->integer('id_mesa')->unsigned()->nullable();
             $table->foreign('id_mesa')->references('id')->on('mesas')->onDelete('cascade');

@@ -20,131 +20,249 @@ if($id != 0){
 
 ?>
 
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 	<head>
-		<title>Nuevo Mesero</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
-		<link rel="stylesheet" href="{{ asset('styles/main.css') }}" />
-		<link href="{{ asset('styles/pixel-admin.min.css') }}" rel="stylesheet" type="text/css">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<title>Matrimonio</title>
+		
+		<!-- CSS  -->
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<link href="{{ asset('/styles/materialize.css') }}" type="text/css" rel="stylesheet" media="screen,projection"/>
+		<link href="{{ asset('/styles/style.css') }}" type="text/css" rel="stylesheet" media="screen,projection"/>
 	</head>
+	
 	<body>
-		<!-- Page Wrapper -->
-		<div id="page-wrapper">
-			<header id="header">
-				<h1><a href="{{ route('principal') }}">Nuevo Mesero</a></h1>
-				<nav id="nav">
-					<ul>
-						<li class="special">
-							<a href="#menu" class="menuToggle"><span>Menu</span></a>
-							<div id="menu">
-								<ul>
-									<!--<li><a href="usuario.html">Nuevo Usuario</a></li>-->
-									<li><a href="{{ route('agregarproducto') }}">Nuevo Producto</a></li>
-									<li><a href="{{ route('meseros') }}">Meseros</a></li>
-									<li><a href="{{ route('productos') }}">Productos</a></li>
-									<li><a href="{{ route('principal') }}">Principal</a></li>
-									<li><a href="{{ route('logout') }}">Cerrar Sesión</a></li>
-								</ul>
-							</div>
-						</li>
-					</ul>
-				</nav>
-			</header>
-		<!-- Main -->
-			<article id="main">
-				<header style="padding-top: 50px; padding-bottom: 50px;" >
-					<h2>MATRIMONIOS</h2>
-					<p>Creacion de un nuevo mesero</p>
-				</header>
-				<section class="wrapper style5" style="padding: 2em;">
-					<div class="inner">
-						<section>
-							<h4 style="text-align: center;">Datos Iniciales</h4>
+		<nav class="white" role="navigation">
+			<div class="nav-wrapper container">
+				<a id="logo-container" href="{{ route('principal') }}" class="brand-logo ">Matrimonios</a>
+				<ul class="right hide-on-med-and-down">
+					<div id="menu">
+						<ul>
 							
-							{!! Form::open(['route' => 'agregarmesero', 'method' => 'POST', 'id' => 'agregar-form_id', 'class' => 'panel']) !!}
+							@if(Auth::guest())
 							
-								<div class="row uniform">
-								    
-								    <div class="12u 12u$(xsmall)">
-    									@include('flash::message')
-    								</div>
+							<li><a href="{{ route('registro') }}">Nuevo Usuario</a></li>
+							
+							@else
+							
+							<li><a class="dropdown-trigger" href="#!"  data-target="dropdown1">Organización<i class="material-icons right">arrow_drop_down</i></a></li>
+								
+							@endif
+							
+							<li><a href="{{ route('catalogo') }}">Nuestros productos</a></li>
+							
+							@if(!Auth::guest())
+					
+							<li><a href="{{ route('logout') }}">Cerrar Sesión</a></li>
+							
+							@endif
+							
+							<li><a href="{{ route('carrito') }}"><i class="material-icons" size="small">shopping_cart</i></a></li>
+						</ul>
+					</div>
+				</ul>
+				
+				<ul id="nav-mobile" class="sidenav">
+					
+					@if(Auth::guest())
+							
+					<li><a href="{{ route('registro') }}">Nuevo Usuario</a></li>
+					
+					@else
+					
+					<li><a class="dropdown-trigger" href="#!"  data-target="dropdown2">Organización<i class="material-icons right">arrow_drop_down</i></a></li>
+						
+					@endif
+					
+					<li><a href="{{ route('catalogo') }}">Nuestros productos</a></li>
+					
+					@if(!Auth::guest())
+					
+					<li><a href="{{ route('logout') }}">Cerrar Sesión</a></li>
+					
+					@endif
+					
+					<li><a href="{{ route('carrito') }}"><i class="material-icons" size="small">shopping_cart</i></a></li>
+					
+				</ul>
+				
+				<a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+				
+				<ul id="dropdown1" class="dropdown-content">
+					
+					@if(Session::get('estado') == 'mesas')
+					
+					<li><a href="{{ route('listamesas') }}">Administrar Mesas</a></li>
+					<li class="divider"></li>
+					
+					@endif
+					@if(Session::get('tipo') == 1)
+					
+					<li><a href="{{ route('agregarmesero') }}">Nuevo Mesero</a></li>
+					<li class="divider"></li>
+					<li><a href="{{ route('agregarproducto') }}">Nuevo Producto</a></li>
+					<li class="divider"></li>
+					<li><a href="{{ route('productos') }}">Productos</a></li>
+					<li class="divider"></li>
+					
+					@endif
+					@if(Session::get('tipo') == 2)
+					
+					<li><a href="{{ route('agregarinvitado') }}">Nuevo Invitado</a></li>
+					<li class="divider"></li>
+					<li><a href="{{ route('invitados') }}">Invitados</a></li>
+					<li class="divider"></li>
+					<li><a href="{{ route('productos') }}">Productos</a></li>
+					<li class="divider"></li>
+					
+					@endif
+					
+					<li><a href="{{ route('meseros') }}">Meseros</a></li>
+					
+				</ul>
+				
+				<ul id="dropdown2" class="dropdown-content">
+					
+					@if(Session::get('estado') == 'mesas')
+					
+					<li><a href="{{ route('listamesas') }}">Administrar Mesas</a></li>
+					<li class="divider"></li>
+					
+					@endif
+					@if(Session::get('tipo') == 1)
+					
+					<li><a href="{{ route('agregarmesero') }}">Nuevo Mesero</a></li>
+					<li class="divider"></li>
+					<li><a href="{{ route('agregarproducto') }}">Nuevo Producto</a></li>
+					<li class="divider"></li>
+					
+					@endif
+					@if(Session::get('tipo') == 2)
+					
+					<li><a href="{{ route('agregarinvitado') }}">Nuevo Invitado</a></li>
+					<li class="divider"></li>
+					<li><a href="{{ route('invitados') }}">Invitados</a></li>
+					<li class="divider"></li>
+					
+					@endif
+					
+					<li><a href="{{ route('meseros') }}">Meseros</a></li>
+					
+				</ul>
+			</div>
+		</nav>
 
-									<div class="12u 12u$(xsmall)">
-										<input type="text" name="nombre" id="nombre" value="{{ $nombre }}" placeholder="Nombre(s) mesero" />
-									</div>
-
-									<div class="12u$ 12u$(xsmall)">
-										<input type="text" name="apellido"  id="apellido" value="{{ $apellido }}" placeholder="Apellido(s) mesero" />
-									</div>
-
-									<div class="12u$ 12u$(xsmall)">
-										<input type="text"   name="direccion" id="direccion" value="{{ $direccion }}" placeholder="Dirección" />
-									</div>
-									
-									<div class="12u$ 12u$(xsmall)">
-										<input type="text"   name="dni" id="dni" value="{{ $dni }}" placeholder="DNI" />
-										<input type="hidden" name="id" id="id" value="{{ $id }}" />
-									</div>
-								</div>
-								<br>
-								<div class="12u$">
-									<ul class="actions" style="text-align: center">
-										<li><input type="submit" value="Agregar" class="principal btn-block btn-lg" id="add_row"/></li>
-									</ul>
+		<div id="index-banner" class="parallax-container">
+			<div class="section no-pad-bot">
+				<div class="container">
+					<br><br>
+					<h1 class="header center white-text lighten-5">AGREGA MESEROS</h1>
+					<div class="row center">
+						<h5 class="header center white-text col s12 lighten-5">Agrega los meseros que atenderan el evento.</h5>
+					</div>
+				</div>
+			</div>
+			<div class="parallax"><img src="{{ asset('/img/nuevas/background1.jpg') }}" alt="Unsplashed background img 1"></div>
+		</div>
+		
+		<div class="container">
+			<section class="wrapper style5">
+				<div class="inner">
+					<section>
+						<h4 style="text-align: center;">Datos Iniciales</h4>
+						
+						{!! Form::open(['route' => 'agregarmesero', 'method' => 'POST', 'id' => 'crearForm', 'class' => 'panel']) !!}
+						
+							<div class="row uniform">
+								
+								@include('flash::message')
+								
+								<div class="input-field"> 
+									<input type="text" name="nombre" id="nombre" class="validate" value="{{ $nombre }}" />
+									<label class="active" for="nombre">Nombre(s) Mesero</label>
+									<span class="helper-text" style="display: none; color: #f00" data-error="wrong" id="errorNombre">El nombre es obligatorio.</span>
 								</div>
 								
-							{!! Form::close() !!}
+								<div class="input-field">
+									<input type="text" name="apellido" id="apellido" class="validate" value="{{ $apellido }}" />
+									<label class="active" for="apellido">Apellido(s) Mesero</label>
+									<span class="helper-text" style="display: none; color: #f00" data-error="wrong" id="errorApellido">El apellido es obligatorio.</span>
+								</div>
+			
+								<div class="input-field"> 
+									<input type="text" name="dni" id="dni" class="validate" value="{{ $dni }}" />
+									<label class="active" for="dni">DNI Mesero</label>
+									<span class="helper-text" style="display: none; color: #f00" data-error="wrong" id="errorDni">El DNI es obligatorio.</span>
+								</div>
+								
+								<div class="input-field"> 
+									<input type="text" name="direccion" id="direccion" class="validate" value="{{ $direccion }}" />
+									<label class="active" for="direccion">Dirección Mesero</label>
+									<span class="helper-text" style="display: none; color: #f00" data-error="wrong" id="errorDireccion">La direccion es obligatoria.</span>
+								</div>
+								
+								<input type="hidden" name="id" id="id" value="{{ $id }}" />
+								
+							</div>
+							<div class="12u$">
+								<ul class="actions" style="text-align: center">
+									<li><input type="button" value="contratar" class="waves-effect waves-light btn" id="contratar"/></li>
+								</ul>
+							</div>
 							
-						</section>
-					</div>
-				</section>
-			</article>
+						{!! Form::close() !!}
+						
+					</section>
+				</div>
+			</section>
 		</div>
-				
 
-		<!-- Scripts -->
-		<script src="{{ asset('js/jquery.min.js') }}"></script>
-		<script src="{{ asset('js/jquery.scrollex.min.js') }}"></script>
-		<script src="{{ asset('js/jquery.scrolly.min.js') }}"></script>
-		<script src="{{ asset('js/skel.min.js') }}"></script>
-		<script src="{{ asset('js/util.js') }}"></script>
-		<script src="{{ asset('js/main.js') }}"></script>
-		<!--<script src="{{ asset('js/invoice2.js') }}"></script>-->
-		<script src="{{ asset('js/bootstrap.min.js') }}"></script>
-		<script src="{{ asset('js/pixel-admin.min.js') }}"></script>
+	  <!--  Scripts-->
+		<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+		<script src="{{ asset('/js/nuevas/materialize.js') }}"></script>
+		<script src="{{ asset('/js/nuevas/init.js') }}"></script>
+		<script src="{{ asset('/js/nuevas/dropdown.js') }}"></script>
+		<script src="{{ asset('/js/nuevas/mesero.js') }}"></script>
 		
 		<script type="text/javascript">
-			$('div.alert').not('.alert-important').delay(3000).fadeOut(350);
 		
-			window.PixelAdmin.start([
-				function () {
-					$("#agregar-form_id").validate({ focusInvalid: true, errorPlacement: function () {} });
+			$(document).ready(() => {
+			    M.updateTextFields()
+			})
+		
+			$('#contratar').click(() => {
 					
-					$("#nombre").rules("add", {
-						required: true,
-						minlength: 1
-					});
+				if($('#direccion').val() == ''){
+					$('#errorDireccion').css('display', 'block')
+					$('#direccion').focus()
+				} else 
+					$('#errorDireccion').css('display', 'none')
 					
-					$("#apellido").rules("add", {
-						required: true,
-						minlength: 1
-					});
+				if($('#dni').val() == ''){
+					$('#errorDni').css('display', 'block')
+					$('#dni').focus()
+				} else 
+					$('#errorDni').css('display', 'none')
 					
-					$("#dni").rules("add", {
-						required: true,
-						minlength: 1
-					});
+				if($('#apellido').val() == ''){
+					$('#errorApellido').css('display', 'block')
+					$('#apellido').focus()
+				} else 
+					$('#errorApellido').css('display', 'none')
 					
-					$("#direccion").rules("add", {
-						required: true,
-						minlength: 1
-					});
-				}
-			]);
+				if($('#nombre').val() == ''){
+					$('#errorNombre').css('display', 'block')
+					$('#nombre').focus()
+				} else 
+					$('#errorNombre').css('display', 'none')	
+					
+				if($('#nombre').val() != '' && $('#apellido').val() != '' && $('#dni').val() != '' && $('#direccion').val() != '')
+					$('#crearForm').submit()
+			})
+		
 		</script>
-		
+
 	</body>
 </html>
